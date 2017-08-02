@@ -1,5 +1,3 @@
-package MyKmeans;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import org.apache.hadoop.util.LineReader;
 
 public class Utils {
     
-    //读取中心文件的数据
+    
     public static ArrayList<ArrayList<Double>> getCentersFromHDFS(String centersPath,boolean isDirectory) throws IOException{
         
         ArrayList<ArrayList<Double>> result = new ArrayList<ArrayList<Double>>();
@@ -48,7 +46,6 @@ public class Utils {
         return result;
     }
     
-    //删掉文件
     public static void deletePath(String pathStr) throws IOException{
         Configuration conf = new Configuration();
         Path path = new Path(pathStr);
@@ -82,11 +79,11 @@ public class Utils {
         }
         
         if(distance == 0.0){
-            //删掉新的中心文件以便最后依次归类输出
+           
             Utils.deletePath(newPath);
             return true;
         }else{
-            //先清空中心文件，将新的中心文件复制到中心文件中，再删掉中心文件
+            
             
             Configuration conf = new Configuration();
             Path outPath = new Path(centerPath);
@@ -104,7 +101,7 @@ public class Utils {
                 FSDataInputStream in = fileSystem.open(listFiles[i].getPath());
                 IOUtils.copyBytes(in, out, 4096, true);
             }
-            //删掉新的中心文件以便第二次任务运行输出
+            
             Utils.deletePath(newPath);
         }
         
